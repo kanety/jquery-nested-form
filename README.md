@@ -10,7 +10,7 @@ A jquery plugin for adding rails nested form dynamically.
 
 Build nested form using rails `fields_for`:
 
-```eruby
+```erb
 <%= form_with do |f| %>
   <div id="container">
     <%= f.fields_for :assocs do |assoc_form| -%>

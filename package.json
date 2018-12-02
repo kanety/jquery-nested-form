@@ -9,8 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
+    "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
-    "build:dev": "webpack --mode development --watch",
     "test": "karma start"
   },
   "dependencies": {
