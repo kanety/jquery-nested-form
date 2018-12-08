@@ -2,16 +2,16 @@
 
 import TemplateBuilder from 'builder/template-builder';
 
-class FormBuilder {
+export default class FormBuilder {
   constructor($forms, options) {
     this.options = options;
     this.$forms = $forms;
 
-    this.assocRegexps = this.options.associations.map((assoc) => {
-      return new RegExp(`(${assoc}${this.options.postfix}(\\[|\\]\\[|_)?)\\d+`);
+    this.assocRegexps = this.options.associationNames.map((assocName, i) => {
+      return new RegExp(`(${assocName}(\\[|\\]\\[|_)?)\\d+`);
     });
-    this.destroyRegexps = this.options.associations.map((assoc) => {
-      return new RegExp(`${assoc}${this.options.postfix}_\\d+__destroy`);
+    this.destroyRegexps = this.options.associationNames.map((assocName, i) => {
+      return new RegExp(`${assocName}_\\d+__destroy`);
     });
 
     this.$template = new TemplateBuilder($forms, options).build();
@@ -33,6 +33,12 @@ class FormBuilder {
   }
 
   remove($form) {
+    if (this.options.beforeRemoveForm) {
+      if (this.options.beforeRemoveForm($form) === false) {
+        return;
+      }
+    }
+
     $form.hide();
     $form.find('input[id][type=hidden]').each((i, elem) => {
       let $elem = $(elem);
@@ -42,6 +48,10 @@ class FormBuilder {
         }
       });
     });
+
+    if (this.options.afterRemoveForm) {
+      this.options.afterRemoveForm($form);
+    }
   }
 
   removeWith($elem) {
@@ -71,5 +81,3 @@ class FormBuilder {
     });
   }
 }
-
-export default FormBuilder;

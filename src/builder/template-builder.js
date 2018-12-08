@@ -1,12 +1,12 @@
 "use strict";
 
-class TemplateBuilder {
+export default class TemplateBuilder {
   constructor($forms, options) {
     this.options = options;
     this.$forms = $forms;
 
-    this.pkRegexps = this.options.associations.map((assoc) => {
-      return new RegExp(`${assoc}${this.options.postfix}_\\d+_id$`);
+    this.pkRegexps = this.options.associationNames.map((assocName) => {
+      return new RegExp(`${assocName}_\\d+_id$`);
     });
   }
 
@@ -49,11 +49,9 @@ class TemplateBuilder {
     });
     names.forEach((name) => {
       let $radios = $template.find(`input[type="radio"][name="${name}"]`);
-      if ($radios.filter(':checked').length == 0) {
+      if ($radios.filter(':checked').length === 0) {
         $radios.filter(`:first`).prop('checked', true);
       }
     });
   }
 }
-
-export default TemplateBuilder;

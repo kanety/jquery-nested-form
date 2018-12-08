@@ -37,8 +37,8 @@
   </form>
   <script>
   $('#container').nestedForm({
-    forms: $('#container .nested-form'),
-    addBy: '#add'
+    forms: '#container .nested-form',
+    adder: '#add'
   });
   </script>
 
@@ -62,9 +62,9 @@
   </form>
   <script>
   $('#removable_container').nestedForm({
-    forms: $('#removable_container .nested-form'),
-    addBy: '#removable_add',
-    removeBy: '.removable-remove'
+    forms: '#removable_container .nested-form',
+    adder: '#removable_add',
+    remover: '.removable-remove'
   });
   </script>
 
@@ -72,35 +72,45 @@
   <form>
     <div id="callback_container">
       <div class="nested-form">
-        <p><input type="text" name="callback_attributes[0][text]" id="callback_attributes_0_text"></p>
+        <p>
+          <input type="text" name="callback_attributes[0][text]" id="callback_attributes_0_text">
+          <input type="button" value="Remove" class="callback-remove">
+        </p>
       </div>
     </div>
     <input type="button" value="Add" id="callback_add">
-    <p id="afterInitialize"> </p>
-    <p id="onBuildTemplate"> </p>
-    <p id="onBuildForm"> </p>
-    <p id="afterAddForm"> </p>
+    <p id="message"> </p>
   </form>
   <script>
   $('#callback_container').nestedForm({
-    forms: $('#callback_container .nested-form'),
-    addBy: '#callback_add',
+    forms: '#callback_container .nested-form',
+    adder: '#callback_add',
+    remover: '.callback-remove',
     afterInitialize: function(instance) {
-      $('#afterInitialize').text('called afterInitialize');
+      $('#message').append('afterInitialize ');
     },
     onBuildTemplate: function($template) {
-      $('#onBuildTemplate').text('called onBuildTemplate with ' + $template.attr('class'));
+      $('#message').append('onBuildTemplate ');
     },
     onBuildForm: function($elem) {
-      $('#onBuildForm').text('called onBuildForm with ' + $elem.attr('class'));
+      $('#message').append('onBuildForm ');
+    },
+    beforeAddForm: function($container, $elem) {
+      $('#message').append('beforeAddForm ');
     },
     afterAddForm: function($container, $elem) {
-      $('#afterAddForm').text('called afterAddForm from ' + $container.attr('id'));
+      $('#message').append('afterAddForm ');
+    },
+    beforeRemoveForm: function($container, $elem) {
+      $('#message').append('beforeRemoveForm ');
+    },
+    afterRemoveForm: function($container, $elem) {
+      $('#message').append('afterRemoveForm ');
     }
   });
   </script>
 
-  <h1>Change index</h1>
+  <h1>Customize start index</h1>
   <form>
     <div id="index_container">
       <div class="nested-form">
@@ -113,36 +123,36 @@
   </form>
   <script>
   $('#index_container').nestedForm({
-    forms: $('#index_container .nested-form'),
-    addBy: '#index_add',
-    increment: 5,
+    forms: '#index_container .nested-form',
+    adder: '#index_add',
+    increment: 3,
     startIndex: 10,
-    maxIndex: 20,
+    maxIndex: 15,
     onBuildForm: function($elem, index) {
       $elem.find('input[type="text"]').val(index);
     }
   });
   </script>
 
-  <h1>Specify associations</h1>
+  <h1>Multiple associations</h1>
   <form>
-    <div id="specify_container">
+    <div id="multiple_container">
       <div class="nested-form">
         <p>
-          <input type="text" name="specify_attributes[0][text]" id="specify_attributes_0_text">
+          <input type="text" name="some_attributes[0][text]" id="some_attributes_0_text">
         </p>
         <p>
           <input type="text" name="other_attributes[0][text]" id="other_attributes_0_text">
         </p>
       </div>
     </div>
-    <input type="button" value="Add" id="specify_add">
+    <input type="button" value="Add" id="multiple_add">
   </form>
   <script>
-  $('#specify_container').nestedForm({
-    forms: $('#specify_container .nested-form'),
-    addBy: '#specify_add',
-    associations: ['specify'],
+  $('#multiple_container').nestedForm({
+    forms: '#multiple_container .nested-form',
+    adder: '#multiple_add',
+    associations: ['some', 'other'],
     onBuildForm: function($elem) {
       showID($elem);
     }
@@ -168,8 +178,8 @@
   </form>
   <script>
   $('#complex_container').nestedForm({
-    forms: $('#complex_container .nested-form'),
-    addBy: '#complex_add',
+    forms: '#complex_container .nested-form',
+    adder: '#complex_add',
     associations: ['base'],
     cloneEvents: false,
     onBuildForm: function($elem) {
@@ -187,7 +197,7 @@
   function initDeepNestedForm($container) {
     $container.nestedForm({
       forms: $container.find('.deep-nested-form'),
-      addBy: $container.siblings('.deep-add'),
+      adder: $container.siblings('.deep-add'),
       associations: ['deep'],
       cloneEvents: false,
       onBuildForm: function($elem) {
