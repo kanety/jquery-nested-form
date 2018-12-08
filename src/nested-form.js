@@ -4,31 +4,34 @@ import FormBuilder from 'builder/form-builder';
 
 const NAMESPACE = 'nested-form';
 const DEFAULTS = {
-  forms: $(),
-  addBy: $(),
-  removeBy: $(),
-  associations: [''],
+  forms: '',
+  adder: '',
+  remover: null,
+  associations: '',
+  postfixes: '_attributes',
   increment: 1,
   startIndex: 0,
   maxIndex: null,
   tags: ['input', 'textarea', 'select', 'label'],
   attributes: ['id', 'name', 'for'],
-  postfix: '_attributes',
   cloneEvents: true,
   // callbacks
   afterInitialize: null,
   onBuildTemplate: null,
   onBuildForm: null,
-  afterAddForm: null
+  beforeAddForm: null,
+  afterAddForm: null,
+  beforeRemoveForm: null,
+  afterRemoveForm: null
 };
 
-class NestedForm {
-  constructor(container, options) {
+export default class NestedForm {
+  constructor(container, options = {}) {
     this.options = $.extend({}, DEFAULTS, options);
+    this.options.associationNames = this.makeAssociationNames();
 
     this.$container = $(container);
-    this.$addBy = $(this.options.addBy);
-    this.$removeBy = $(this.options.removeBy);
+    this.$adder = $(this.options.adder);
 
     this.bind();
 
@@ -40,29 +43,35 @@ class NestedForm {
   }
 
   bind() {
-    this.$addBy.on(`click.${NAMESPACE}`, (e) => {
+    this.$adder.on(`click.${NAMESPACE}`, (e) => {
       e.preventDefault();
       this.add();
     });
-    this.$removeBy.on(`click.${NAMESPACE}`, (e) => {
+    this.$container.on(`click.${NAMESPACE}`, this.options.remover, (e) => {
       e.preventDefault();
       this.remove($(e.currentTarget));
     });
   }
 
   unbind() {
-    this.$addBy.off(`click.${NAMESPACE}`);
-    this.$removeBy.off(`click.${NAMESPACE}`);
+    this.$adder.off(`.${NAMESPACE}`);
+    this.$container.off(`.${NAMESPACE}`);
   }
 
   add() {
     for (let n=0; n<this.options.increment; n++) {
       let [$form, newIndex] = this.builder.add();
 
+      if (this.options.beforeAddForm) {
+        if (this.options.beforeAddForm(this.$container, $form, newIndex) === false) {
+          break;
+        }
+      }
+
       this.$container.append($form);
 
       if (this.options.afterAddForm) {
-        this.options.afterAddForm(this.$container, $form);
+        this.options.afterAddForm(this.$container, $form, newIndex);
       }
 
       if (this.options.maxIndex && newIndex >= this.options.maxIndex) {
@@ -77,16 +86,27 @@ class NestedForm {
   }
 
   enable() {
-    this.$addBy.prop('disabled', false);
+    this.$adder.prop('disabled', false);
   }
 
   disable() {
-    this.$addBy.prop('disabled', true);
+    this.$adder.prop('disabled', true);
+  }
+
+  makeAssociationNames() {
+    let associations = [].concat(this.options.associations);
+    let postfixes = [].concat(this.options.postfixes);
+    return associations.map((assoc, i) => {
+      let postfix = postfixes[i] || postfixes[0];
+      return `${assoc}${postfix}`;
+    });
+  }
+
+  static getDefaults() {
+    return DEFAULTS;
   }
 
   static setDefaults(options) {
     $.extend(DEFAULTS, options);
   }
 }
-
-export default NestedForm;

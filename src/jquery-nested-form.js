@@ -14,5 +14,6 @@ $.fn.nestedForm = function(options) {
 };
 
 $.nestedForm = {
+  getDefaults: NestedForm.getDefaults,
   setDefaults: NestedForm.setDefaults
 };
