@@ -1,11 +1,14 @@
 var webpack = require("webpack");
 
 module.exports = {
-  entry: ["./src/jquery-nested-form.js"],
+entry: {
+    "jquery-nested-form": "./src/jquery-nested-form.js"
+  },
 
   output: {
     path: __dirname + "/dist",
-    filename: "jquery-nested-form.js"
+    filename: "[name].js",
+    publicPath: "/dist"
   },
 
   resolve: {
@@ -32,6 +35,12 @@ module.exports = {
 
   watchOptions: {
     poll: 1000
+  },
+
+  devServer: {
+    host: "0.0.0.0",
+    port: 3000,
+    disableHostCheck: true
   }
 };
 
