@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 
 module.exports = {
-entry: {
+  entry: {
     "jquery-nested-form": "./src/jquery-nested-form.js"
   },
 
@@ -9,13 +9,6 @@ entry: {
     path: __dirname + "/dist",
     filename: "[name].js",
     publicPath: "/dist"
-  },
-
-  resolve: {
-    modules: [
-      __dirname + "/src",
-      "node_modules"
-    ]
   },
 
   module: {

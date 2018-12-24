@@ -1,8 +1,8 @@
 "use strict";
 
-import FormBuilder from 'builder/form-builder';
+import { NAMESPACE } from './consts';
+import FormBuilder from './builder/form-builder';
 
-const NAMESPACE = 'nested-form';
 const DEFAULTS = {
   forms: '',
   adder: '',

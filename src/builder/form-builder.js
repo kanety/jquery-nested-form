@@ -1,6 +1,6 @@
 "use strict";
 
-import TemplateBuilder from 'builder/template-builder';
+import TemplateBuilder from './template-builder';
 
 export default class FormBuilder {
   constructor($forms, options) {

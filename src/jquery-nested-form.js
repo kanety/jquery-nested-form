@@ -1,8 +1,7 @@
 "use strict";
 
-import NestedForm from 'nested-form';
-
-const NAMESPACE = 'nested-form';
+import { NAMESPACE } from './consts';
+import NestedForm from './nested-form';
 
 $.fn.nestedForm = function(options) {
   return this.each(function() {
@@ -13,7 +12,4 @@ $.fn.nestedForm = function(options) {
   });  
 };
 
-$.nestedForm = {
-  getDefaults: NestedForm.getDefaults,
-  setDefaults: NestedForm.setDefaults
-};
+$.nestedForm = NestedForm;
