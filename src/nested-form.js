@@ -47,10 +47,13 @@ export default class NestedForm {
       e.preventDefault();
       this.add();
     });
-    this.$container.on(`click.${NAMESPACE}`, this.options.remover, (e) => {
-      e.preventDefault();
-      this.remove($(e.currentTarget));
-    });
+
+    if (this.options.remover) {
+      this.$container.on(`click.${NAMESPACE}`, this.options.remover, (e) => {
+        e.preventDefault();
+        this.remove($(e.currentTarget));
+      });
+    }
   }
 
   unbind() {
