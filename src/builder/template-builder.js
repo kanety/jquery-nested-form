@@ -36,7 +36,7 @@ export default class TemplateBuilder {
   initFields($template) {
     $template.find('textarea, input[type="text"]').val('');
     $template.find('input[type="radio"], input[type="checkbox"]').prop('checked', false);
-    $template.find('option').prop('selected', false);
+    $template.find('option').removeAttr('selected').prop('selected', false);
   }
 
   checkFirstRadioButton($template) {
