@@ -12,4 +12,4 @@ $.fn.nestedForm = function(options) {
   });  
 };
 
-$.nestedForm = NestedForm;
+$.NestedForm = NestedForm;

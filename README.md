@@ -73,8 +73,8 @@ If you want to customize the attributes to be replaced, `tags` and `attributes` 
 
 ```javascript
 $().nestedForm({
-  tags: $.nestedForm.getDefaults().tags.concat(['a']),
-  attributes: $.nestedForm.getDefaults().attributes.concat(['onclick'])
+  tags: $.NestedForm.getDefaults().tags.concat(['a']),
+  attributes: $.NestedForm.getDefaults().attributes.concat(['onclick'])
 });
 ```
 
