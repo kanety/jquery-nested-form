@@ -1,15 +1,13 @@
-describe('jquery-nested-form', function() {
-  beforeEach(function() {
+describe('jquery-nested-form', () => {
+  beforeEach(() => {
     document.body.innerHTML = __html__['index.html'];
+    eval($('script').text());
+    eval($('script').text());
   });
 
-  it('builds basic form', function() {
-    var $container = $('#container');
-    var $adder = $('#add');
-    $container.nestedForm({
-      forms: $container.find('.nested-form'),
-      adder: $adder
-    });
+  it('builds basic form', () => {
+    let $container = $('#container');
+    let $adder = $('#add');
 
     $adder.click();
     expect($container.find('.nested-form').length).toEqual(2);
@@ -17,14 +15,9 @@ describe('jquery-nested-form', function() {
     expect($container.find('.nested-form').length).toEqual(3);
   });
 
-  it('builds remobable form', function() {
-    var $container = $('#removable_container');
-    var $adder = $('#removable_add');
-    $container.nestedForm({
-      forms: $container.find('.nested-form'),
-      adder: $adder,
-      remover: '.removable-remove'
-    });
+  it('builds remobable form', () => {
+    let $container = $('#removable_container');
+    let $adder = $('#removable_add');
 
     $adder.click();
     expect($container.find('.nested-form:visible').length).toEqual(3);
@@ -32,36 +25,10 @@ describe('jquery-nested-form', function() {
     expect($container.find('.nested-form:visible').length).toEqual(2);
   });
 
-  it('has callbacks', function() {
-    var $container = $('#callback_container');
-    var $adder = $('#callback_add');
-    var $message = $('#message');
-    $container.nestedForm({
-      forms: $container.find('.nested-form'),
-      adder: $adder,
-      remover: '.callback-remove',
-      afterInitialize: function(instance) {
-        $message.append('afterInitialize');
-      },
-      onBuildTemplate: function($template) {
-        $message.append('onBuildTemplate');
-      },
-      onBuildForm: function($elem) {
-        $message.append('onBuildForm');
-      },
-      beforeAddForm: function($container, $elem) {
-        $message.append('beforeAddForm');
-      },
-      afterAddForm: function($container, $elem) {
-        $message.append('afterAddForm');
-      },
-      beforeRemoveForm: function($container, $elem) {
-        $message.append('beforeRemoveForm');
-      },
-      afterRemoveForm: function($container, $elem) {
-        $message.append('afterRemoveForm');
-      }
-    });
+  it('has callbacks', () => {
+    let $container = $('#callback_container');
+    let $adder = $('#callback_add');
+    let $message = $('#message');
 
     expect($message.text()).toContain('afterInitialize');
     expect($message.text()).toContain('onBuildTemplate');
@@ -76,16 +43,9 @@ describe('jquery-nested-form', function() {
     expect($message.text()).toContain('afterRemoveForm');
   });
 
-  it('Customizes start index', function() {
-    var $container = $('#index_container');
-    var $adder = $('#index_add');
-    $container.nestedForm({
-      forms: $container.find('.nested-form'),
-      adder: $adder,
-      increment: 3,
-      startIndex: 10,
-      maxIndex: 15
-    });
+  it('Customizes start index', () => {
+    let $container = $('#index_container');
+    let $adder = $('#index_add');
 
     $adder.click();
     expect($container.find('input[type="text"]').length).toEqual(4);
@@ -94,14 +54,9 @@ describe('jquery-nested-form', function() {
     expect($adder.attr('disabled')).toEqual('disabled');
   });
 
-  it('has multiple associations', function() {
-    var $container = $('#multiple_container');
-    var $adder = $('#multiple_add');
-    $container.nestedForm({
-      forms: $container.find('.nested-form'),
-      adder: $adder,
-      associations: ['some', 'other']
-    });
+  it('has multiple associations', () => {
+    let $container = $('#multiple_container');
+    let $adder = $('#multiple_add');
 
     $adder.click();
     expect($('#some_attributes_1_text').length).toEqual(1);

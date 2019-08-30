@@ -113,6 +113,6 @@ export default class NestedForm {
   }
 
   static setDefaults(options) {
-    $.extend(DEFAULTS, options);
+    return $.extend(DEFAULTS, options);
   }
 }
