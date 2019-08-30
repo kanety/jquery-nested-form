@@ -11,6 +11,10 @@ module.exports = {
     publicPath: "/dist"
   },
 
+  externals: {
+    jquery: "jQuery"
+  },
+
   module: {
     rules: [
       {

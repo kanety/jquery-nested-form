@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import TemplateBuilder from './template-builder';
 
 export default class FormBuilder {

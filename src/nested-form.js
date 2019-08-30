@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import { NAMESPACE } from './consts';
 import FormBuilder from './builder/form-builder';
 
@@ -38,6 +39,10 @@ export default class NestedForm {
     if (this.options.afterInitialize) {
       this.options.afterInitialize(this);
     }
+  }
+
+  destroy() {
+    this.unbind();
   }
 
   bind() {

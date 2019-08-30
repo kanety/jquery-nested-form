@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 export default class TemplateBuilder {
   constructor($forms, options) {
     this.options = options;
