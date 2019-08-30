@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.3.0
+
+* Remove selected attribute from option tag when added a nested form.
+* Capitalize global class. Use $.NestedForm instead of $.nestedForm.
+* Destroy existing instance on initialization.
+* Refactoring.
+
 ## 0.2.0
 
 * Export class for convenience.
