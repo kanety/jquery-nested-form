@@ -1,5 +1,3 @@
-"use strict";
-
 import { NAMESPACE } from './consts';
 import NestedForm from './nested-form';
 

@@ -1,5 +1,3 @@
-"use strict";
-
 export default class TemplateBuilder {
   constructor($forms, options) {
     this.options = options;

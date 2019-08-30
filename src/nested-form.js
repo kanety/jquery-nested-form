@@ -1,5 +1,3 @@
-"use strict";
-
 import { NAMESPACE } from './consts';
 import FormBuilder from './builder/form-builder';
 
