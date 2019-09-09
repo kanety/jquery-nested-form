@@ -3,8 +3,8 @@ import TemplateBuilder from './template-builder';
 
 export default class FormBuilder {
   constructor($forms, options) {
-    this.options = options;
     this.$forms = $forms;
+    this.options = options;
 
     this.assocRegexps = this.options.associationNames.map((assocName, i) => {
       return new RegExp(`(${assocName}(\\[|\\]\\[|_)?)\\d+`);
@@ -12,12 +12,10 @@ export default class FormBuilder {
     this.destroyRegexps = this.options.associationNames.map((assocName, i) => {
       return new RegExp(`${assocName}_\\d+__destroy`);
     });
-
-    this.$template = new TemplateBuilder($forms, options).build();
   }
 
   add() {
-    let $form = this.$template.clone(true, true);
+    let $form = new TemplateBuilder(this.$forms, this.options).build().clone(true, true);
     let newIndex = this.$forms.length + this.options.startIndex;
 
     this.renewIndex($form, newIndex);

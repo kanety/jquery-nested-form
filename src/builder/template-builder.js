@@ -17,6 +17,8 @@ export default class TemplateBuilder {
     this.initFields($template)
     this.checkFirstRadioButton($template)
 
+    $template.show();
+
     if (this.options.onBuildTemplate) {
       this.options.onBuildTemplate($template);
     }
@@ -39,6 +41,7 @@ export default class TemplateBuilder {
     $template.find('textarea, input[type="text"]').val('');
     $template.find('input[type="radio"], input[type="checkbox"]').prop('checked', false);
     $template.find('option').removeAttr('selected').prop('selected', false);
+    $template.find('input[id$="__destroy"]').removeAttr('value');
   }
 
   checkFirstRadioButton($template) {
