@@ -38,7 +38,7 @@
   </form>
   <script>
   $('#container').nestedForm({
-    forms: '#container .nested-form',
+    forms: '.nested-form',
     adder: '#add'
   });
   </script>
@@ -63,7 +63,7 @@
   </form>
   <script>
   $('#removable_container').nestedForm({
-    forms: '#removable_container .nested-form',
+    forms: '.nested-form',
     adder: '#removable_add',
     remover: '.removable-remove'
   });
@@ -84,7 +84,7 @@
   </form>
   <script>
   $('#callback_container').nestedForm({
-    forms: '#callback_container .nested-form',
+    forms: '.nested-form',
     adder: '#callback_add',
     remover: '.callback-remove',
     afterInitialize: function(instance) {
@@ -124,7 +124,7 @@
   </form>
   <script>
   $('#index_container').nestedForm({
-    forms: '#index_container .nested-form',
+    forms: '.nested-form',
     adder: '#index_add',
     increment: 3,
     startIndex: 10,
@@ -151,7 +151,7 @@
   </form>
   <script>
   $('#multiple_container').nestedForm({
-    forms: '#multiple_container .nested-form',
+    forms: '.nested-form',
     adder: '#multiple_add',
     associations: ['some', 'other'],
     onBuildForm: function($elem) {
@@ -179,7 +179,7 @@
   </form>
   <script>
   $('#complex_container').nestedForm({
-    forms: '#complex_container .nested-form',
+    forms: '.nested-form',
     adder: '#complex_add',
     associations: ['base'],
     cloneEvents: false,

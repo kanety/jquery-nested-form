@@ -34,7 +34,7 @@ export default class NestedForm {
 
     this.bind();
 
-    this.builder = new FormBuilder($(this.options.forms), this.options)
+    this.builder = new FormBuilder(this.$container.find(this.options.forms), this.options)
 
     if (this.options.afterInitialize) {
       this.options.afterInitialize(this);
