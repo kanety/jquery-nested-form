@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.4.0
+
+* Find nested form in container.
+* Build template on demand.
+
 ## 0.3.0
 
 * Remove selected attribute from option tag when added a nested form.
