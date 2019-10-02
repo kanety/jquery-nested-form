@@ -21,7 +21,7 @@ describe('jquery-nested-form', () => {
 
     $adder.click();
     expect($container.find('.nested-form:visible').length).toEqual(3);
-    $container.find('input.removable-remove:last').click();
+    $container.find('input.removable-remove').last().click();
     expect($container.find('.nested-form:visible').length).toEqual(2);
   });
 
@@ -38,7 +38,7 @@ describe('jquery-nested-form', () => {
     expect($message.text()).toContain('beforeAddForm');
     expect($message.text()).toContain('afterAddForm');
 
-    $('.callback-remove:last').click();
+    $('.callback-remove').last().click();
     expect($message.text()).toContain('beforeRemoveForm');
     expect($message.text()).toContain('afterRemoveForm');
   });

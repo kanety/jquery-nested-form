@@ -11,7 +11,7 @@ export default class TemplateBuilder {
   }
 
   build() {
-    let $template = this.$forms.filter(':last').clone(this.options.cloneEvents, this.options.cloneEvents);
+    let $template = this.$forms.last().clone(this.options.cloneEvents, this.options.cloneEvents);
 
     this.removePkFields($template)
     this.initFields($template)
@@ -53,7 +53,7 @@ export default class TemplateBuilder {
     names.forEach((name) => {
       let $radios = $template.find(`input[type="radio"][name="${name}"]`);
       if ($radios.filter(':checked').length === 0) {
-        $radios.filter(`:first`).prop('checked', true);
+        $radios.first().prop('checked', true);
       }
     });
   }
