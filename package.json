@@ -1,6 +1,6 @@
 {
   "name": "@kanety/jquery-nested-form",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "main": "dist/jquery-nested-form.js",
   "author": "Yoshikazu Kaneta <kaneta@sitebridge.co.jp>",
   "repository": {
