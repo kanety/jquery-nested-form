@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.0
+
+* Add addTo option.
+* Add a new form after the last form instead of the bottom of container.
+
 ## 0.4.1
 
 * Fix jquery deprecated selector.
