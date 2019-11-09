@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <script src="node_modules/jquery/dist/jquery.min.js"></script>
   <script src="dist/jquery-nested-form.js"></script>
+  <script>
+  function afterInitialize(nestedForm) {
+    onBuildForm(nestedForm.builder.$forms);
+  }
+  function onBuildForm($elem) {
+    $elem.find('input[type="text"]').each(function(i, input) {
+      $(input).val($(input).attr('id'));
+    });
+  }
+  </script>
 </head>
 <body>
   <h1>Basic Form</h1>
@@ -39,7 +49,9 @@
   <script>
   $('#container').nestedForm({
     forms: '.nested-form',
-    adder: '#add'
+    adder: '#add',
+    afterInitialize: afterInitialize,
+    onBuildForm: onBuildForm
   });
   </script>
 
@@ -65,7 +77,9 @@
   $('#removable_container').nestedForm({
     forms: '.nested-form',
     adder: '#removable_add',
-    remover: '.removable-remove'
+    remover: '.removable-remove',
+    afterInitialize: afterInitialize,
+    onBuildForm: onBuildForm
   });
   </script>
 
@@ -129,9 +143,8 @@
     increment: 3,
     startIndex: 10,
     maxIndex: 15,
-    onBuildForm: function($elem, index) {
-      $elem.find('input[type="text"]').val(index);
-    }
+    afterInitialize: afterInitialize,
+    onBuildForm: onBuildForm
   });
   </script>
 
@@ -154,9 +167,27 @@
     forms: '.nested-form',
     adder: '#multiple_add',
     associations: ['some', 'other'],
-    onBuildForm: function($elem) {
-      showID($elem);
-    }
+    afterInitialize: afterInitialize,
+    onBuildForm: onBuildForm
+  });
+  </script>
+
+  <h1>Add forms on first position</h1>
+  <form>
+    <div id="first_container">
+      <input type="button" value="Add" id="first_add">
+      <div class="nested-form">
+        <input type="text" name="first_attributes[0][text]" id="first_attributes_0_text">
+      </div>
+    </div>
+  </form>
+  <script>
+  $('#first_container').nestedForm({
+    forms: '.nested-form',
+    adder: '#first_add',
+    addTo: 'first',
+    afterInitialize: afterInitialize,
+    onBuildForm: onBuildForm
   });
   </script>
 
@@ -183,27 +214,22 @@
     adder: '#complex_add',
     associations: ['base'],
     cloneEvents: false,
+    afterInitialize: afterInitialize,
     onBuildForm: function($elem) {
       initDeepNestedForm($elem.find('.deep-container'));
-      showID($elem);
+      onBuildForm($elem);
     }
   });
   initDeepNestedForm($('#complex_container .deep-container'));
 
-  function showID($elem) {
-    $elem.find('input[type="text"]').each(function(i, input) {
-      $(input).val($(input).attr('id'));
-    });
-  }
   function initDeepNestedForm($container) {
     $container.nestedForm({
-      forms: $container.find('.deep-nested-form'),
+      forms: '.deep-nested-form',
       adder: $container.siblings('.deep-add'),
       associations: ['deep'],
       cloneEvents: false,
-      onBuildForm: function($elem) {
-        showID($elem);
-      }
+      afterInitialize: afterInitialize,
+      onBuildForm: onBuildForm
     });
   }
   </script>

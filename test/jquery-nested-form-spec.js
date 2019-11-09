@@ -62,4 +62,12 @@ describe('jquery-nested-form', () => {
     expect($('#some_attributes_1_text').length).toEqual(1);
     expect($('#other_attributes_1_text').length).toEqual(1);
   });
+
+  it('adds a form as first position', () => {
+    let $container = $('#first_container');
+    let $adder = $('#first_add');
+
+    $adder.click();
+    expect($container.find('.nested-form input').first().attr('id')).toEqual('first_attributes_1_text');
+  });
 });

@@ -14,6 +14,7 @@ const DEFAULTS = {
   tags: ['input', 'textarea', 'select', 'label'],
   attributes: ['id', 'name', 'for'],
   cloneEvents: true,
+  addTo: 'last',
   // callbacks
   afterInitialize: null,
   onBuildTemplate: null,
@@ -34,7 +35,7 @@ export default class NestedForm {
 
     this.bind();
 
-    this.builder = new FormBuilder(this.$container.find(this.options.forms), this.options)
+    this.builder = new FormBuilder(this.forms(), this.options)
 
     if (this.options.afterInitialize) {
       this.options.afterInitialize(this);
@@ -64,6 +65,10 @@ export default class NestedForm {
     this.$container.off(`.${NAMESPACE}`);
   }
 
+  forms() {
+    return this.$container.find(this.options.forms);
+  }
+
   add() {
     for (let n=0; n<this.options.increment; n++) {
       let [$form, newIndex] = this.builder.add();
@@ -74,7 +79,11 @@ export default class NestedForm {
         }
       }
 
-      this.$container.append($form);
+      if (this.options.addTo == 'first') {
+        this.forms().first().before($form);
+      } else {
+        this.forms().last().after($form);
+      }
 
       if (this.options.afterAddForm) {
         this.options.afterAddForm(this.$container, $form, newIndex);
