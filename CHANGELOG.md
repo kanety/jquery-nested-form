@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.1
+
+* Find adder element in container first.
+
 ## 0.5.0
 
 * Add addTo option.

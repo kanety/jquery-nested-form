@@ -22,11 +22,11 @@ Build nested form using Rails `fields_for` as usual:
     <%= f.fields_for :assocs do |assoc_form| %>
       <div class="nested-form">
         <%= assoc_form.text_field :text %>
-        <input type="button" value="Remove" id="remove">
+        <button type="button" class="remove">Remove</button>
       </div>
     <% end %>
+    <button type="button" id="add">Add</button>
   </div>
-  <input type="button" value="Add" id="add">
 <% end %>
 ```
 
@@ -54,8 +54,8 @@ The index of `id` and `name` attributes are incremented automatically.
     <div class="nested-form">
       <input type="text" name="model[assocs_attributes][1][text]" id="model_assocs_attributes_1_text">
     </div>
+    <button type="button" id="add">Add</button>
   </div>
-  <input type="button" value="Add" id="button">
 </form>
 ```
 
