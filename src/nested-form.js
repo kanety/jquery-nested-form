@@ -31,7 +31,11 @@ export default class NestedForm {
     this.options.associationNames = this.makeAssociationNames();
 
     this.$container = $(container);
-    this.$adder = $(this.options.adder);
+    if (this.$container.find(this.options.adder).length) {
+      this.$adder = this.$container.find(this.options.adder);
+    } else {
+      this.$adder = $(this.options.adder);
+    }
 
     this.bind();
 

@@ -43,8 +43,8 @@
         </p>
         <input type="hidden" value="999" name="basic_attributes[0][id]" id="basic_attributes_0_id">
       </div>
+      <button type="button" id="add">Add</button>
     </div>
-    <input type="button" value="Add" id="add">
   </form>
   <script>
   $('#container').nestedForm({
@@ -67,11 +67,11 @@
         <p>
           <input type="text" name="removable_attributes[1][text]" id="removable_attributes_1_text">
           <input type="hidden" name="removable_attributes[1][_destroy]" id="removable_attributes_1__destroy">
-          <input type="button" value="Remove" class="removable-remove">
+          <button type="button" class="removable-remove">Remove</button>
         </p>
       </div>
+      <button type="button" id="removable_add">Add</button>
     </div>
-    <input type="button" value="Add" id="removable_add">
   </form>
   <script>
   $('#removable_container').nestedForm({
@@ -89,11 +89,11 @@
       <div class="nested-form">
         <p>
           <input type="text" name="callback_attributes[0][text]" id="callback_attributes_0_text">
-          <input type="button" value="Remove" class="callback-remove">
+          <button type="button" class="callback-remove">Remove</button>
         </p>
       </div>
+      <button type="button" id="callback_add">Add</button>
     </div>
-    <input type="button" value="Add" id="callback_add">
     <p id="message"> </p>
   </form>
   <script>
@@ -133,8 +133,8 @@
           <input type="text" name="index_attributes[10][text]" id="index_attributes_10_text">
         </p>
       </div>
+      <button type="button" id="index_add">Add</button>
     </div>
-    <input type="button" value="Add" id="index_add">
   </form>
   <script>
   $('#index_container').nestedForm({
@@ -159,8 +159,8 @@
           <input type="text" name="other_attributes[0][text]" id="other_attributes_0_text">
         </p>
       </div>
+      <button type="button" id="multiple_add">Add</button>
     </div>
-    <input type="button" value="Add" id="multiple_add">
   </form>
   <script>
   $('#multiple_container').nestedForm({
@@ -174,8 +174,8 @@
 
   <h1>Add forms on first position</h1>
   <form>
+    <button type="button" id="first_add">Add</button>
     <div id="first_container">
-      <input type="button" value="Add" id="first_add">
       <div class="nested-form">
         <input type="text" name="first_attributes[0][text]" id="first_attributes_0_text">
       </div>
@@ -201,12 +201,12 @@
             <input type="text" name="item[base_attributes][0][deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_text1" style="width: 400px;">
             <input type="text" name="item[base_attributes][0][deep_attributes][0][text2]" id="item_base_attributes_0_deep_attributes_0_text2" style="width: 400px;">
           </div>
+          <button type="button" class="deep-add">Add</button>
         </div>
-        <input type="button" value="Add" class="deep-add">
       </div>
+      <hr>
+      <button type="button" id="complex_add">Add</button>
     </div>
-    <hr>
-    <input type="button" value="Add" id="complex_add">
   </form>
   <script>
   $('#complex_container').nestedForm({
@@ -225,7 +225,7 @@
   function initDeepNestedForm($container) {
     $container.nestedForm({
       forms: '.deep-nested-form',
-      adder: $container.siblings('.deep-add'),
+      adder: '.deep-add',
       associations: ['deep'],
       cloneEvents: false,
       afterInitialize: afterInitialize,

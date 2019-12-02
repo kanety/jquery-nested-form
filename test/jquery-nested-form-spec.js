@@ -21,7 +21,7 @@ describe('jquery-nested-form', () => {
 
     $adder.click();
     expect($container.find('.nested-form:visible').length).toEqual(3);
-    $container.find('input.removable-remove').last().click();
+    $container.find('.removable-remove').last().click();
     expect($container.find('.nested-form:visible').length).toEqual(2);
   });
 
