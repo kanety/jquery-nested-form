@@ -1,28 +1,25 @@
 import $ from 'jquery';
 
 export default class TemplateBuilder {
-  constructor($forms, options) {
+  constructor(options) {
     this.options = options;
-    this.$forms = $forms;
 
-    this.pkRegexps = this.options.associationNames.map((assocName) => {
-      return new RegExp(`${assocName}_\\d+_id$`);
+    this.pkRegexps = this.options.assocs.map((assoc) => {
+      return new RegExp(`${assoc}_\\d+_id$`);
     });
   }
 
-  build() {
-    let $template = this.$forms.last().clone(this.options.cloneEvents, this.options.cloneEvents);
+  build($form) {
+    let $template = $form.clone(this.options.cloneEvents, this.options.cloneEvents);
 
-    this.removePkFields($template)
-    this.initFields($template)
-    this.checkFirstRadioButton($template)
-
-    $template.show();
+    this.removePk($template);
+    this.initFields($template);
+    this.checkRadio($template);
 
     return $template;
   }
 
-  removePkFields($template) {
+  removePk($template) {
     $template.find('input[id][type="hidden"]').each((i, elem) => {
       let $elem = $(elem);
       this.pkRegexps.forEach((regexp) => {
@@ -40,7 +37,7 @@ export default class TemplateBuilder {
     $template.find('input[id$="__destroy"]').removeAttr('value');
   }
 
-  checkFirstRadioButton($template) {
+  checkRadio($template) {
     let names = $template.find('input[name][type="radio"]').map((i, radio) => {
       return $(radio).attr('name');
     }).get().filter((name, pos, arr) => {

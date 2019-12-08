@@ -6,7 +6,7 @@
   <script src="dist/jquery-nested-form.js"></script>
   <script>
   function afterInitialize(nestedForm) {
-    onBuildForm(nestedForm.builder.$forms);
+    onBuildForm(nestedForm.forms());
   }
   function onBuildForm($elem) {
     $elem.find('input[type="text"]').each(function(i, input) {

@@ -28,18 +28,14 @@ const DEFAULTS = {
 export default class NestedForm {
   constructor(container, options = {}) {
     this.options = $.extend({}, DEFAULTS, options);
-    this.options.associationNames = this.makeAssociationNames();
+    this.options.assocs = this.makeAssocs();
 
     this.$container = $(container);
-    if (this.$container.find(this.options.adder).length) {
-      this.$adder = this.$container.find(this.options.adder);
-    } else {
-      this.$adder = $(this.options.adder);
-    }
+    this.$adder = this.adder();
+
+    this.builder = new FormBuilder(this.options);
 
     this.bind();
-
-    this.builder = new FormBuilder(this.forms(), this.options)
 
     if (this.options.afterInitialize) {
       this.options.afterInitialize(this);
@@ -59,13 +55,13 @@ export default class NestedForm {
   bind() {
     this.$adder.on(`click.${NAMESPACE}`, (e) => {
       e.preventDefault();
-      this.add();
+      this.addForms();
     });
 
     if (this.options.remover) {
       this.$container.on(`click.${NAMESPACE}`, this.options.remover, (e) => {
         e.preventDefault();
-        this.remove($(e.currentTarget));
+        this.removeWith($(e.currentTarget));
       });
     }
   }
@@ -75,43 +71,81 @@ export default class NestedForm {
     this.$container.off(`.${NAMESPACE}`);
   }
 
+  adder() {
+    if (this.$container.find(this.options.adder).length) {
+      return this.$container.find(this.options.adder);
+    } else {
+      return $(this.options.adder);
+    }
+  }
+
   forms() {
     return this.$container.find(this.options.forms);
   }
 
-  add() {
+  addForms() {
     for (let n=0; n<this.options.increment; n++) {
-      let [$form, newIndex] = this.builder.add();
-
-      if (this.options.beforeAddForm) {
-        if (this.options.beforeAddForm(this.$container, $form, newIndex) === false) {
-          break;
-        }
-      }
-
-      if (this.options.addTo == 'first') {
-        this.forms().first().before($form);
-      } else {
-        this.forms().last().after($form);
-      }
-
-      if (this.options.afterAddForm) {
-        this.options.afterAddForm(this.$container, $form, newIndex);
-      }
-
-      if (this.options.nestedForm) {
-        $form.nestedForm(this.options.nestedForm);
-      }
-
-      if (this.options.maxIndex && newIndex >= this.options.maxIndex) {
-        this.disable();
-        break;
-      }
+      if (this.add() === false) break;
     }
   }
 
-  remove($elem) {
-    this.builder.removeWith($elem);
+  add() {
+    let [$form, newIndex] = this.builder.build(this.forms());
+
+    if (this.options.onBuildForm) {
+      this.options.onBuildForm($form, newIndex);
+    }
+
+    if (this.options.beforeAddForm) {
+      if (this.options.beforeAddForm(this.$container, $form, newIndex) === false) {
+        return false;
+      }
+    }
+
+    if (this.options.addTo == 'first') {
+      this.forms().first().before($form);
+    } else {
+      this.forms().last().after($form);
+    }
+
+    if (this.options.afterAddForm) {
+      this.options.afterAddForm(this.$container, $form, newIndex);
+    }
+
+    if (this.options.nestedForm) {
+      $form.nestedForm(this.options.nestedForm);
+    }
+
+    if (this.options.maxIndex && newIndex >= this.options.maxIndex) {
+      this.disable();
+      return false;
+    }
+
+    return true;
+  }
+
+  removeWith($remover) {
+    this.forms().each((i, form) => {
+      let $form = $(form);
+      if ($.contains($form.get(0), $remover.get(0))) {
+        this.remove($form);
+        return;
+      }
+    });
+  }
+
+  remove($form) {
+    if (this.options.beforeRemoveForm) {
+      if (this.options.beforeRemoveForm($form) === false) {
+        return;
+      }
+    }
+
+    this.builder.destroy($form);
+
+    if (this.options.afterRemoveForm) {
+      this.options.afterRemoveForm($form);
+    }
   }
 
   enable() {
@@ -122,7 +156,7 @@ export default class NestedForm {
     this.$adder.prop('disabled', true);
   }
 
-  makeAssociationNames() {
+  makeAssocs() {
     let associations = [].concat(this.options.associations);
     let postfixes = [].concat(this.options.postfixes);
     return associations.map((assoc, i) => {
