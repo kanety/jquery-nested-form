@@ -19,10 +19,6 @@ export default class TemplateBuilder {
 
     $template.show();
 
-    if (this.options.onBuildTemplate) {
-      this.options.onBuildTemplate($template);
-    }
-
     return $template;
   }
 

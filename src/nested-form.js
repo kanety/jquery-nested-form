@@ -18,7 +18,6 @@ const DEFAULTS = {
   nestedForm: null,
   // callbacks
   afterInitialize: null,
-  onBuildTemplate: null,
   onBuildForm: null,
   beforeAddForm: null,
   afterAddForm: null,

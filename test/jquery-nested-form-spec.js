@@ -37,7 +37,6 @@ describe('jquery-nested-form', () => {
       expect($message.text()).toContain('afterInitialize');
 
       $adder.click();
-      expect($message.text()).toContain('onBuildTemplate');
       expect($message.text()).toContain('onBuildForm');
       expect($message.text()).toContain('beforeAddForm');
       expect($message.text()).toContain('afterAddForm');
