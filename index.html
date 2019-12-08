@@ -130,6 +130,12 @@
           <input type="text" name="index_attributes[10][text]" id="index_attributes_10_text">
         </p>
       </div>
+      <div class="nested-form">
+        <p>
+          <input type="text" name="index_attributes[11][text]" id="index_attributes_11_text">
+          <button type="button" class="index-remove">Remove</button>
+        </p>
+      </div>
       <button type="button" id="index_add">Add</button>
     </div>
   </form>
@@ -137,9 +143,10 @@
   $('#index_container').nestedForm({
     forms: '.nested-form',
     adder: '#index_add',
-    increment: 3,
+    remover: '.index-remove',
+    increment: 2,
+    max: 5,
     startIndex: 10,
-    maxIndex: 15,
     afterInitialize: afterInitialize,
     onBuildForm: onBuildForm
   });

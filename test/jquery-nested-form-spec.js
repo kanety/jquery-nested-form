@@ -47,15 +47,15 @@ describe('jquery-nested-form', () => {
     });
   });
 
-  describe('startIndex and maxIndex', () => {
-    it('sets startIndex and maxIndex', () => {
+  describe('max', () => {
+    it('sets max and startIndex', () => {
       let $container = $('#index_container');
       let $adder = $('#index_add');
 
       $adder.click();
       expect($container.find('input[type="text"]').length).toEqual(4);
       $adder.click();
-      expect($container.find('input[type="text"]').length).toEqual(6);
+      expect($container.find('input[type="text"]').length).toEqual(5);
       expect($adder.attr('disabled')).toEqual('disabled');
     });
   });

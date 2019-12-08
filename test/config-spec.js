@@ -1,9 +1,9 @@
 describe('jquery-nested-form', () => {
   it('config', () => {
     let defaults = $.NestedForm.getDefaults();
-    expect(defaults.maxIndex).toEqual(null);
+    expect(defaults.test).toEqual(undefined);
 
-    defaults = $.NestedForm.setDefaults({maxIndex: 999});
-    expect(defaults.maxIndex).toEqual(999);
+    defaults = $.NestedForm.setDefaults({test: 999});
+    expect(defaults.test).toEqual(999);
   });
 });

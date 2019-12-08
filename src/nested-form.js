@@ -9,8 +9,8 @@ const DEFAULTS = {
   associations: '',
   postfixes: '_attributes',
   increment: 1,
+  max: null,
   startIndex: 0,
-  maxIndex: null,
   tags: ['input', 'textarea', 'select', 'label'],
   attributes: ['id', 'name', 'for'],
   cloneEvents: true,
@@ -116,12 +116,7 @@ export default class NestedForm {
       $form.nestedForm(this.options.nestedForm);
     }
 
-    if (this.options.maxIndex && newIndex >= this.options.maxIndex) {
-      this.disable();
-      return false;
-    }
-
-    return true;
+    return this.refresh();
   }
 
   removeWith($remover) {
@@ -145,6 +140,18 @@ export default class NestedForm {
 
     if (this.options.afterRemoveForm) {
       this.options.afterRemoveForm($form);
+    }
+
+    this.refresh();
+  }
+
+  refresh() {
+    if (this.options.max && this.forms().filter(':visible').length >= this.options.max) {
+      this.disable();
+      return false;
+    } else {
+      this.enable();
+      return true;
     }
   }
 
