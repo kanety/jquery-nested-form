@@ -15,6 +15,7 @@ const DEFAULTS = {
   attributes: ['id', 'name', 'for'],
   cloneEvents: true,
   addTo: 'last',
+  nestedForm: null,
   // callbacks
   afterInitialize: null,
   onBuildTemplate: null,
@@ -43,6 +44,12 @@ export default class NestedForm {
 
     if (this.options.afterInitialize) {
       this.options.afterInitialize(this);
+    }
+
+    if (this.options.nestedForm) {
+      this.forms().each((i, form) => {
+        $(form).nestedForm(this.options.nestedForm);
+      });
     }
   }
 
@@ -91,6 +98,10 @@ export default class NestedForm {
 
       if (this.options.afterAddForm) {
         this.options.afterAddForm(this.$container, $form, newIndex);
+      }
+
+      if (this.options.nestedForm) {
+        $form.nestedForm(this.options.nestedForm);
       }
 
       if (this.options.maxIndex && newIndex >= this.options.maxIndex) {

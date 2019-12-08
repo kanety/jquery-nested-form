@@ -102,25 +102,25 @@
     adder: '#callback_add',
     remover: '.callback-remove',
     afterInitialize: function(instance) {
-      $('#message').append('afterInitialize ');
+      $('#message').prepend('afterInitialize<br>');
     },
     onBuildTemplate: function($template) {
-      $('#message').append('onBuildTemplate ');
+      $('#message').prepend('onBuildTemplate<br>');
     },
     onBuildForm: function($elem) {
-      $('#message').append('onBuildForm ');
+      $('#message').prepend('onBuildForm<br>');
     },
     beforeAddForm: function($container, $elem) {
-      $('#message').append('beforeAddForm ');
+      $('#message').prepend('beforeAddForm<br>');
     },
     afterAddForm: function($container, $elem) {
-      $('#message').append('afterAddForm ');
+      $('#message').prepend('afterAddForm<br>');
     },
     beforeRemoveForm: function($container, $elem) {
-      $('#message').append('beforeRemoveForm ');
+      $('#message').prepend('beforeRemoveForm<br>');
     },
     afterRemoveForm: function($container, $elem) {
-      $('#message').append('afterRemoveForm ');
+      $('#message').prepend('afterRemoveForm<br>');
     }
   });
   </script>
@@ -172,7 +172,7 @@
   });
   </script>
 
-  <h1>Add forms on first position</h1>
+  <h1>Add forms at first position</h1>
   <form>
     <button type="button" id="first_add">Add</button>
     <div id="first_container">
@@ -193,20 +193,28 @@
 
   <h1>Complex Form</h1>
   <form>
-    <div id="complex_container">
-      <div class="nested-form">
-        <input type="text" name="item[base_attributes][0][text]" id="item_base_attributes_0_text" style="width: 300px;">
-        <div class="deep-container">
-          <div class="deep-nested-form">
-            <input type="text" name="item[base_attributes][0][deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_text1" style="width: 400px;">
-            <input type="text" name="item[base_attributes][0][deep_attributes][0][text2]" id="item_base_attributes_0_deep_attributes_0_text2" style="width: 400px;">
-          </div>
-          <button type="button" class="deep-add">Add</button>
-        </div>
-      </div>
-      <hr>
-      <button type="button" id="complex_add">Add</button>
-    </div>
+    <ul id="complex_container">
+      <li class="nested-form">
+        <input type="text" name="item[base_attributes][0][text]" id="item_base_attributes_0_text" style="width: 500px;">
+        <ul class="deep-container">
+          <li class="deep-nested-form">
+            <input type="text" name="item[base_attributes][0][deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_text1" style="width: 500px;">
+            <ul class="more-deep-container">
+              <li class="more-deep-nested-form">
+                <input type="text" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_0_text1" style="width: 500px;">
+              </li>
+              <li class="more-deep-nested-form">
+                <input type="text" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][1][text1]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_1_text1" style="width: 500px;">
+                <button type="button" class="more-deep-remove">Remove</button>
+              </li>
+              <li><button type="button" class="more-deep-add">Add</button></li>
+            </ul>
+          </li>
+          <li><button type="button" class="deep-add">Add</button></li>
+        </ul>
+      </li>
+      <li><button type="button" id="complex_add">Add</button></li>
+    </ul>
   </form>
   <script>
   $('#complex_container').nestedForm({
@@ -215,23 +223,25 @@
     associations: ['base'],
     cloneEvents: false,
     afterInitialize: afterInitialize,
-    onBuildForm: function($elem) {
-      initDeepNestedForm($elem.find('.deep-container'));
-      onBuildForm($elem);
-    }
-  });
-  initDeepNestedForm($('#complex_container .deep-container'));
-
-  function initDeepNestedForm($container) {
-    $container.nestedForm({
+    onBuildForm: onBuildForm,
+    nestedForm: {
       forms: '.deep-nested-form',
       adder: '.deep-add',
       associations: ['deep'],
       cloneEvents: false,
       afterInitialize: afterInitialize,
-      onBuildForm: onBuildForm
-    });
-  }
+      onBuildForm: onBuildForm,
+      nestedForm: {
+        forms: '.more-deep-nested-form',
+        adder: '.more-deep-add',
+        remover: '.more-deep-remove',
+        associations: ['more_deep'],
+        cloneEvents: false,
+        afterInitialize: afterInitialize,
+        onBuildForm: onBuildForm
+      }
+    }
+  });
   </script>
 </body>
 </html>
