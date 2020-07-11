@@ -59,7 +59,9 @@ The index of `id` and `name` attributes are incremented automatically.
 </form>
 ```
 
-The index is replaced by using the `associations` and `postfixes` options.
+### Options
+
+`associations` and `postfixes` are available for finding the index of the nested form.
 If your nested form consists of multiple associations such as `assocsA` and `assocsB`, you can set the associations as the following example:
 
 ```javascript
@@ -69,7 +71,7 @@ $().nestedForm({
 });
 ```
 
-If you want to customize the attributes to be replaced, `tags` and `attributes` options are available:
+`tags` and `attributes` are available to customize the attributes to be replaced:
 
 ```javascript
 $().nestedForm({
@@ -78,20 +80,21 @@ $().nestedForm({
 });
 ```
 
-To disable the add button when the number of nested forms reached to the limit, use `maxIndex` as follows:
+`max` is useful if you want to disable the add button when the number of nested forms reached to the limit:
 
 ```javascript
 $().nestedForm({
-  maxIndex: 10
+  max: 10
 });
 ```
+
+### Callbacks
 
 Following callbacks are available to manipulate DOM elements:
 
 ```javascript
 $().nestedForm({
   afterInitialize: function(instance) {},
-  onBuildTemplate: function($template) {},
   onBuildForm: function($form) {},
   beforeAddForm: function($container, $form) {},
   afterAddForm: function($container, $form) {},
@@ -99,6 +102,44 @@ $().nestedForm({
   afterRemoveForm: function($form) {}
 });
 ```
+
+### Multi-level nested form
+
+If you have multi-level nested form, use `nestedForm` as follows:
+
+```erb
+<%= form_with do |f| %>
+  <ul id="container">
+    <%= f.fields_for :assocs do |assoc_form| %>
+      <li class="nested-form">
+        <%= assoc_form.text_field :text %>
+        <ul class="deep-container">
+          <%= assoc_form.fields_for :assocs2 do |assoc2_form| %>
+            <li class="deep-nested-form">
+              <%= assoc2_form.text_field :text %>
+            </li>
+          <% end %>
+          <li><button type="button" class="deep-add">Add</button></li>
+        </ul>
+      </li>
+    <% end %>
+    <li><button type="button" class="add">Add</button></li>
+  </ul>
+<% end %>
+```
+
+```javascript
+$('#container').nestedForm({
+  forms: '.nested-form',
+  adder: '.add',
+  nestedForm: {
+    forms: '.deep-nested-form',
+    adder: '.deep-add'
+  }
+});
+```
+
+The `nestedForm` option handles same arguments as the first-level form.
 
 ## License
 

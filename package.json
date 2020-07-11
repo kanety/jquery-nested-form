@@ -1,7 +1,7 @@
 {
   "name": "@kanety/jquery-nested-form",
   "description": "A jquery plugin for adding / removing nested form dynamically",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "main": "dist/jquery-nested-form.js",
   "author": "Yoshikazu Kaneta <kaneta@sitebridge.co.jp>",
   "repository": {
