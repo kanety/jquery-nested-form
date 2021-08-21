@@ -3,31 +3,15 @@ import $ from 'jquery';
 export default class TemplateBuilder {
   constructor(options) {
     this.options = options;
-
-    this.pkRegexps = this.options.assocs.map((assoc) => {
-      return new RegExp(`${assoc}_\\d+_id$`);
-    });
   }
 
   build($form) {
     let $template = $form.clone(this.options.cloneEvents, this.options.cloneEvents);
 
-    this.removePk($template);
     this.initFields($template);
     this.checkRadio($template);
 
     return $template;
-  }
-
-  removePk($template) {
-    $template.find('input[id][type="hidden"]').each((i, elem) => {
-      let $elem = $(elem);
-      this.pkRegexps.forEach((regexp) => {
-        if ($elem.attr('id').match(regexp)) {
-          $elem.remove();
-        }
-      });
-    });
   }
 
   initFields($template) {

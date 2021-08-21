@@ -41,15 +41,20 @@ export default class NestedForm {
       this.options.afterInitialize(this);
     }
 
+    this.children = [];
     if (this.options.nestedForm) {
       this.forms().each((i, form) => {
-        $(form).nestedForm(this.options.nestedForm);
+        let child = new NestedForm(form, this.options.nestedForm);
+        this.children.push(child);
       });
     }
   }
 
   destroy() {
     this.unbind();
+    this.children.forEach((child) => {
+      child.destroy();
+    });
   }
 
   bind() {
@@ -92,6 +97,8 @@ export default class NestedForm {
   add() {
     let [$form, newIndex] = this.builder.build(this.forms());
 
+    this.removePk($form);
+
     if (this.options.onBuildForm) {
       this.options.onBuildForm($form, newIndex);
     }
@@ -113,10 +120,27 @@ export default class NestedForm {
     }
 
     if (this.options.nestedForm) {
-      $form.nestedForm(this.options.nestedForm);
+      let child = new NestedForm($form, this.options.nestedForm);
+      child.removePk($form);
+      this.children.push(child);
     }
 
     return this.refresh();
+  }
+
+  removePk($form) {
+    let regexps = this.options.assocs.map((assoc) => {
+      return new RegExp(`${assoc}_\\d+_id$`);
+    });
+
+    $form.find('input[id][type="hidden"]').each((i, elem) => {
+      let $elem = $(elem);
+      regexps.forEach((regexp) => {
+        if ($elem.attr('id').match(regexp)) {
+          $elem.remove();
+        }
+      });
+    });
   }
 
   removeWith($remover) {

@@ -200,15 +200,19 @@
     <ul id="complex_container">
       <li class="nested-form">
         <input type="text" name="item[base_attributes][0][text]" id="item_base_attributes_0_text" style="width: 500px;">
+        <input type="hidden" name="item[base_attributes][0][id]" id="item_base_attributes_0_id">
         <ul class="deep-container">
           <li class="deep-nested-form">
             <input type="text" name="item[base_attributes][0][deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_text1" style="width: 500px;">
+            <input type="hidden" name="item[base_attributes][0][deep_attributes][0][id]" id="item_base_attributes_0_deep_attributes_0_id">
             <ul class="more-deep-container">
               <li class="more-deep-nested-form">
                 <input type="text" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][0][text1]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_0_text1" style="width: 500px;">
+                <input type="hidden" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][0][id]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_0_id">
               </li>
               <li class="more-deep-nested-form">
                 <input type="text" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][1][text1]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_1_text1" style="width: 500px;">
+                <input type="hidden" name="item[base_attributes][0][deep_attributes][0][more_deep_attributes][1][id]" id="item_base_attributes_0_deep_attributes_0_more_deep_attributes_1_id">
                 <button type="button" class="more-deep-remove">Remove</button>
               </li>
               <li><button type="button" class="more-deep-add">Add</button></li>
